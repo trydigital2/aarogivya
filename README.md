@@ -1,4 +1,4 @@
-# Aarogivya (आरोगिव्य) 🏥
+# Aarogivya🏥 
 
 > **Your Health, Our Priority.**  
 > A modern, comprehensive Flutter healthcare application for doctor appointment scheduling, pharmacy management, digital health records, and telemedicine services.
