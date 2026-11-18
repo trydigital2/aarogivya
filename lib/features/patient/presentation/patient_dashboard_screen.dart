@@ -17,6 +17,7 @@ import 'package:aarogivya/features/doctor/presentation/widgets/doctor_card.dart'
 import 'package:aarogivya/features/medicines/domain/entities/medicine.dart';
 import 'package:aarogivya/features/medicines/domain/repositories/medicine_repository.dart';
 import 'package:aarogivya/features/notifications/domain/repositories/notification_repository.dart';
+import 'package:aarogivya/features/patient/domain/entities/health_tip.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -532,28 +533,84 @@ class _MedicinesSection extends StatelessWidget {
   }
 }
 
-class _HealthTip extends StatelessWidget {
+class _HealthTip extends StatefulWidget {
+  @override
+  State<_HealthTip> createState() => _HealthTipState();
+}
+
+class _HealthTipState extends State<_HealthTip> {
+  int _tipIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: scheme.secondaryContainer,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Row(
-        children: [
-          Icon(Icons.tips_and_updates_outlined,
-              color: scheme.onSecondaryContainer),
-          const SizedBox(width: 14),
-          Expanded(
-            child: Text(
-              'Health tip: Aim for 30 minutes of movement and seven hours of sleep each day.',
-              style: TextStyle(color: scheme.onSecondaryContainer),
+    final tip = HealthTip.defaultTips[_tipIndex];
+
+    return InkWell(
+      onTap: () {
+        setState(() {
+          _tipIndex = (_tipIndex + 1) % HealthTip.defaultTips.length;
+        });
+      },
+      borderRadius: BorderRadius.circular(20),
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: scheme.secondaryContainer,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: scheme.surface,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(
+                Icons.tips_and_updates_rounded,
+                color: scheme.primary,
+                size: 24,
+              ),
             ),
-          ),
-        ],
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        tip.title,
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: scheme.onSecondaryContainer,
+                            ),
+                      ),
+                      Text(
+                        tip.category,
+                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                              color: scheme.primary,
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    tip.description,
+                    style: TextStyle(
+                      color: scheme.onSecondaryContainer.withValues(alpha: 0.85),
+                      fontSize: 13,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
