@@ -25,10 +25,13 @@ class _MedicineScreenState extends State<MedicineScreen> {
   static const _categories = <String>[
     'All',
     'Pain Relief',
-    'Vitamins',
+    'Antibiotics',
     'Cardiac',
     'Diabetes',
-    'Skin Care',
+    'Allergy',
+    'Supplements',
+    'Digestive',
+    'Cold & Cough',
   ];
 
   @override
